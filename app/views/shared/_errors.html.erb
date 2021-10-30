@@ -1,0 +1,17 @@
+<% if obj.errors.any? %>
+  <% obj.errors.full_messages.each do |msg| %>
+    <div class="alert alert_warning">
+      <span class="icon">
+          <i class="fa fa-exclamation-triangle"></i>
+      </span>
+
+      <div class="text">
+          <strong>Warning</strong>
+            <p><%= msg %></p>
+      </div>
+      <button class="close">
+          <i class="fa fa-close"></i>
+      </button>
+    </div>
+  <% end %>
+<% end %>

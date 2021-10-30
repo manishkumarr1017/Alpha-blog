@@ -1,0 +1,27 @@
+
+<%= form_with(scope: :session, url: login_path, local: true) do |f| %>
+<div class="login-form login-form-sm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="form-group h5">
+          <%= f.label :email, class: "row col-2 col-form-label text-light" %>
+          <div class="row col-12">
+            <%= f.email_field :email, class: "form-control shadow rounded", placeholder: "Enter your email" %>
+          </div>
+        </div>
+        <div class="form-group h5 mt-4">
+          <%= f.label :password, class: "row col-2 col-form-label text-light" %>
+          <div class="row col-12"> 
+            <%= f.password_field :password, class: "form-control shadow rounded", placeholder: "Enter your password" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="btn btn-primary place-center">
+  <a><%= f.submit "Login", id: "id", class: "text-white"%></a>
+</div>
+<% end %>

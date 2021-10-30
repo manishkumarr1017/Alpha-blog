@@ -1,0 +1,32 @@
+<% flash.each do |name, msg| %>  
+  <% if name == "notice" %>
+    <div class="alert alert_success">
+      <span class="icon">
+          <i class="fa fa-check"></i>
+      </span>
+
+      <div class="text">
+          <strong>Success</strong>
+          <p><%= msg %></p>
+      </div>
+      <button class="close">
+          <i class="fa fa-close"></i>
+      </button>
+    </div>
+  <% else %>
+    <div class="alert alert_danger">
+      <span class="icon">
+        <i class="fa fa-close"></i>
+      </span>
+  
+      <div class="text">
+        <strong>Danger</strong>
+        <p><%= msg %></p>
+      </div>
+  
+      <button class="close">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  <% end %>
+<% end %> 

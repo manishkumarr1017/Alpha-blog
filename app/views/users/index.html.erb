@@ -1,0 +1,100 @@
+
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-indicators justify-content-center">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <% (1..@users.length - 1).each do |i| %>
+      <% if i%3 == 0 %>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="<%= i/3 %>"></button>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="d-flex flex-row">
+        <% @users.first(3).each_with_index do |user, index| %>
+            <div class="card" onclick="flip(event)">
+              <div class="card-body front">
+                <h2>0<%= index + 1 %></h2>
+                <%= image_tag "manish.jpeg", height: 150, class: "rounded shadow mt-4", alt: user.username %>
+                <h3 class="mt-4"><%= user.username.upcase %></h3>
+                <div class="card-btn">
+                  <%= link_to "View Articles", user %>
+                </div>
+                <small class="text-white">Joined <%= time_ago_in_words(user.created_at) %> ago</small>
+              </div>
+              <div class="card-body back">
+                <div class="card-btn">
+                  <%= link_to "View", user %>
+                </div>
+                <% if logged_in? && (user == current_user || current_user.admin?) %>
+                  <div class="card-btn">
+                    <%= link_to "Edit", edit_user_path(user) %>
+                  </div>
+                  <div class="card-btn">
+                    <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" } %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <% if @users.length > 3 %>
+      <% (1..@users.length/3).each do |ofst|%>
+        <div class="carousel-item">
+          <div class="d-flex flex-row">
+            <% @users.limit(3).offset(ofst*3).each_with_index do |user, index| %>
+              <div class="card" onclick="flip(event)">
+                <div class="card-body front">
+                  <h2>0<%= ofst * 3 + index + 1 %></h2>
+                  <%= image_tag "manish.jpeg", height: 150, class: "rounded shadow mt-4", alt: user.username %>
+                  <h3 class="mt-4"><%= user.username.upcase %></h3>
+                  <div class="card-btn">
+                    <%= link_to "View Articles", user %>
+                  </div>
+                  <small class="text-white">Joined <%= time_ago_in_words(user.created_at) %> ago</small>
+                </div>
+                <div class="card-body back">
+                  <div class="card-btn">
+                    <%= link_to "View", user %>
+                  </div>
+                  <% if logged_in? && (current_user == user || current_user.admin?) %>
+                    <div class="card-btn">
+                      <%= link_to "Edit", edit_user_path(user) %>
+                    </div>
+                    <div class="card-btn">
+                      <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" } %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+function flip(event){
+	var element = event.currentTarget;
+  front = element.childNodes[1];
+  back = element.childNodes[3];
+	if (element.className === "card") {
+    if(element.style.transform == "rotateY(360deg)") {
+      element.style.transform = "rotateY(0deg)";
+      back.style.display = "none";
+      front.style.display = "block";
+    }
+    else {
+      element.style.transform = "rotateY(360deg)";
+      front.style.display = "none";
+      back.style.display = "block";
+
+    }
+  }
+};
+</script>
